@@ -6,6 +6,7 @@
 * Character - класс, в котором описаны поля персонажа
 * CharacterAddDTO - класс, используемый в запросе для добавления персонажа
 * RabbitMQ - класс для работы с RabbitMQ
+* Friend - класс, в котором описаны поля друга
 
 Реализованные запросы:
 * Список из всех персонажей (get http://localhost:8080/characters)
@@ -16,3 +17,4 @@
 * Удалить персонажа по id (delete http://localhost:8080/characters/{id})
 * Добавить персонажу друга (post http://localhost:8080/characters/{id}/friends body: String)
 * Добавить персонажу несколько друзей (post http://localhost:8080/characters/{id}/friends body: List<String>)
+* Получить список друзей (get http://localhost:8080/characters/{id}/friends)

@@ -1,19 +1,19 @@
 package lab;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
+import lab.entity.Friend;
 import lab.objects.CharacterAddDTO;
-import lab.objects.Character;
+import lab.entity.Character;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @ApplicationScoped
 public class Controller {
-    private List<Character> characters = new ArrayList<>();
-    private int lastId = 0;
 
+    @Transactional
     public void addCharacter(CharacterAddDTO characterAddDTO) {
         Character character = new Character();
 
@@ -21,24 +21,21 @@ public class Controller {
         character.setAge(characterAddDTO.getAge());
         character.setGender(characterAddDTO.getGender());
 
-        lastId++;
-        character.setId(lastId);
-        characters.add(character);
+        character.persist();
     }
 
     public List<Character> getAllCharacters() {
-        return characters;
+        return Character.listAll();
     }
 
+    @Transactional
     public void deleteCharacter(int id) {
-        characters.removeIf(character -> character.getId() == id);
+        Character.deleteById(id);
     }
 
+    @Transactional
     public Character changeCharacter(Character newCharacter) {
-        Character character = characters.stream()
-                .filter(i -> i.getId() == newCharacter.getId())
-                .findFirst()
-                .orElse(null);
+        Character character = Character.findById(newCharacter.id);
 
         if (character != null){
             character.setName(newCharacter.getName());
@@ -50,35 +47,45 @@ public class Controller {
     }
 
     public Character getCharacterById(int id) {
-        Character character = characters.stream()
-                .filter(i -> i.getId() == id)
-                .findFirst()
-                .orElse(null);
+        Character character = Character.findById(id);
 
         return character;
     }
 
     public List<Character> getCharactersByGender(String gender) {
-        return characters.stream()
-                .filter(character -> character.getGender().contains(gender))
-                .collect(Collectors.toList());
+        List<Character> characters = Character.find("gender", gender).list();
+        return characters;
     }
 
+    @Transactional
     public List<String> addFriend(int id, String friend) {
         Character character = getCharacterById(id);
-        if (character != null){
-            character.getFriends().add(friend);
-            return character.getFriends();
+        if(character != null) {
+            Friend friendEntity = new Friend();
+            friendEntity.setFriendName(friend);
+            friendEntity.setCharacterID(character.id);
+            friendEntity.persist();
+            return getFriendNames(id);
         }
         return null;
     }
 
-    public Character addFriends(int id, List<String> friends) {
+    @Transactional
+    public List<String> addFriends(int id, List<String> friends) {
         Character character = getCharacterById(id);
         if (character != null){
-            character.getFriends().addAll(friends);
-            return character;
+            for(String friend : friends){
+                Friend friendEntity = new Friend();
+                friendEntity.setFriendName(friend);
+                friendEntity.setCharacterID(character.id);
+                friendEntity.persist();
+            }
+            return getFriendNames(id);
         }
         return null;
+    }
+    public List<String> getFriendNames(int id){
+        List<Friend> friends = Friend.find("characterID", id).list();
+        return friends.stream().map(friend -> friend.getFriendName()).collect(Collectors.toList());
     }
 }

@@ -3,9 +3,9 @@ package lab;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import lab.Controller;
+import lab.entity.Friend;
 import lab.objects.CharacterAddDTO;
-import lab.objects.Character;
+import lab.entity.Character;
 
 import java.util.List;
 
@@ -61,7 +61,13 @@ public class Web {
 
     @POST
     @Path("/{id}/friends")
-    public Character addFriends(@PathParam("id") int id, List<String> friends) {
+    public List<String> addFriends(@PathParam("id") int id, List<String> friends) {
         return controller.addFriends(id, friends);
+    }
+
+    @GET
+    @Path("/{id}/friends")
+    public List<String> getFriends(@PathParam("id") int id) {
+        return controller.getFriendNames(id);
     }
 }

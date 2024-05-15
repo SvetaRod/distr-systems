@@ -1,23 +1,14 @@
-package lab.objects;
+package lab.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Entity;
 
-public class Character {
-    private int id;
+@Entity
+public class Character extends PanacheEntity {
     private String name;
     private String gender;
     private int age;
-    private List<String> friends = new ArrayList<>();
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -41,11 +32,5 @@ public class Character {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public List<String> getFriends(){return friends;}
-    public void setFriends(List<String> friends)
-    {
-        this.friends = friends;
     }
 }
