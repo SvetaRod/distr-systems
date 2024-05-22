@@ -1,17 +1,17 @@
-package lab;
+package lab.PanacheEntity;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import lab.entity.Friend;
-import lab.objects.CharacterAddDTO;
-import lab.entity.Character;
+import lab.PanacheEntity.entity.Friend;
+import lab.PanacheEntity.models.CharacterAddDTO;
+import lab.PanacheEntity.entity.Character;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @ApplicationScoped
-public class Controller {
+public class Service {
 
     @Transactional
     public void addCharacter(CharacterAddDTO characterAddDTO) {
@@ -37,7 +37,7 @@ public class Controller {
     public Character changeCharacter(Character newCharacter) {
         Character character = Character.findById(newCharacter.id);
 
-        if (character != null){
+        if (character != null) {
             character.setName(newCharacter.getName());
             character.setGender(newCharacter.getGender());
             character.setAge(newCharacter.getAge());
@@ -60,7 +60,7 @@ public class Controller {
     @Transactional
     public List<String> addFriend(int id, String friend) {
         Character character = getCharacterById(id);
-        if(character != null) {
+        if (character != null) {
             Friend friendEntity = new Friend();
             friendEntity.setFriendName(friend);
             friendEntity.setCharacterID(character.id);
@@ -73,8 +73,8 @@ public class Controller {
     @Transactional
     public List<String> addFriends(int id, List<String> friends) {
         Character character = getCharacterById(id);
-        if (character != null){
-            for(String friend : friends){
+        if (character != null) {
+            for (String friend : friends) {
                 Friend friendEntity = new Friend();
                 friendEntity.setFriendName(friend);
                 friendEntity.setCharacterID(character.id);
@@ -84,7 +84,8 @@ public class Controller {
         }
         return null;
     }
-    public List<String> getFriendNames(int id){
+
+    public List<String> getFriendNames(int id) {
         List<Friend> friends = Friend.find("characterID", id).list();
         return friends.stream().map(friend -> friend.getFriendName()).collect(Collectors.toList());
     }

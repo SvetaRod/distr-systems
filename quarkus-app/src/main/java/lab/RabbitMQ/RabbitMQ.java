@@ -1,4 +1,4 @@
-package lab;
+package lab.RabbitMQ;
 
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -7,7 +7,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import lab.objects.Message;
+import lab.RabbitMQ.models.Message;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
@@ -26,7 +26,7 @@ public class RabbitMQ {
     }
 
     @Incoming("incoming-requests")
-    public void messageHandler(String message){
+    public void messageHandler(String message) {
         Log.info(message);
     }
 }

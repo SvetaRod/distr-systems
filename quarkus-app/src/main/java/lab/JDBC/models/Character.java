@@ -1,9 +1,18 @@
-package lab.objects;
+package lab.JDBC.models;
 
-public class CharacterAddDTO {
+public class Character {
+    private long id;
     private String name;
     private String gender;
     private int age;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
