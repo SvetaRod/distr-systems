@@ -1,14 +1,15 @@
-package lab.JDBC;
+package lab.Controllers;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
-import lab.JDBC.models.Character;
-import lab.PanacheEntity.models.CharacterAddDTO;
+import lab.BD.ServiceJDBC;
+import lab.BD.models.CharacterAddDTO;
+import lab.BD.entity.Character;
 
 import java.util.List;
 
 @Path("jdbc/characters")
-public class RestJDBC {
+public class ControllerJDBC {
 
     @Inject
     private ServiceJDBC controller;

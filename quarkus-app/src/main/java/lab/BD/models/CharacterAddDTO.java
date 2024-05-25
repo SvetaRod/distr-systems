@@ -1,14 +1,9 @@
-package lab.PanacheEntity.entity;
+package lab.BD.models;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.Entity;
-
-@Entity
-public class Character extends PanacheEntity {
+public class CharacterAddDTO {
     private String name;
     private String gender;
     private int age;
-
 
     public String getName() {
         return name;

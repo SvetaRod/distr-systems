@@ -1,17 +1,17 @@
-package lab.PanacheEntity;
+package lab.BD;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import lab.PanacheEntity.entity.Friend;
-import lab.PanacheEntity.models.CharacterAddDTO;
-import lab.PanacheEntity.entity.Character;
+import lab.BD.entity.Friend;
+import lab.BD.models.CharacterAddDTO;
+import lab.BD.entity.Character;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @ApplicationScoped
-public class Service {
+public class ServicePE {
 
     @Transactional
     public void addCharacter(CharacterAddDTO characterAddDTO) {

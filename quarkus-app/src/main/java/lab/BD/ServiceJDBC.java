@@ -1,13 +1,13 @@
-package lab.JDBC;
+package lab.BD;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import lab.BD.entity.Character;
 
-import lab.JDBC.models.Character;
-import lab.PanacheEntity.models.CharacterAddDTO;
+import lab.BD.models.CharacterAddDTO;
 
 @ApplicationScoped
 public class ServiceJDBC {
@@ -19,9 +19,9 @@ public class ServiceJDBC {
     }
 
     public void initConnection() {
-        String url = "jdbc:postgresql://localhost:5433/characters";
-        String username = "postgres";
-        String password = "postgres";
+        String url = "jdbc:postgresql://bd:5432/characters";
+        String username = "user";
+        String password = "password";
 
         Connection connection = null;
         try {
@@ -40,7 +40,7 @@ public class ServiceJDBC {
 
             while (result.next()) {
                 Character character = new Character();
-                character.setId(result.getLong("id"));
+                character.id = result.getLong("id");
                 character.setName(result.getString("name"));
                 character.setAge(result.getInt("age"));
                 character.setGender(result.getString("gender"));
@@ -76,7 +76,7 @@ public class ServiceJDBC {
             preparedStatement.setString(1, character.getName());
             preparedStatement.setInt(2, character.getAge());
             preparedStatement.setString(3, character.getGender());
-            preparedStatement.setLong(4, character.getId());
+            preparedStatement.setLong(4, character.id);
 
             preparedStatement.executeUpdate();
             return true;
